@@ -1,5 +1,21 @@
 #   Python
 
+
+### Behaviour of ++ and -- in python
+-   ++ and -- is not treated as increment or decrement operators in python as it does in C++.
+-   In python ++ and -- is treated as:
+    ```
+        a = 7
+        ++a  =>  +(+a)  =>  +a
+        --a  =>  -(-a)  =>  +a
+
+
+        7 +++++ ++ + + a  =>    7+a         =>  14
+        7 -- a            =>    7 + 7       =>  14
+        7 --- a           =>    7 - (+7)    =>  7 - 7  => 0
+        7 --- -- - - - a  =>    7 + 7       =>  14
+    ```
+
 ##  Dtypes:
 -   String:                 x = "hi"
 -   Int                     x = 5
@@ -88,6 +104,23 @@
             for (key, val) in x.items():
                 print("Key is: ", key, " ", " Value is: ", val)
         ```
+
+
+### Ordered Dictonary from collections
+-   It has all properties of dictonary in addition to one quality of preserving the insertion order of elements.
+
+```
+    from collections import OrderedDict
+
+    od1= OrderedDict([(3: "Three"), (2: "Two"), (1: "One")])
+
+    od2 = OrderedDict()
+    od2[1] = "T-One"
+    od2[3] = "T-Three"
+    od2[2] = "T-Two"
+
+    print(od1 == od2)   =>  Output: False
+```
 
 
 ### Pass Keyword
