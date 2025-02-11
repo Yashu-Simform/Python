@@ -36,8 +36,6 @@ listcopy_sliced = d1['logs'][:]
 x = dict(k1="v1", k2="v2", k3="v3")  
 type(x)
 
+#Traversing
 for (k,v) in x.items():
     print('Key: ', k, ' V: ',v,'.',sep='') 
-
-
-# print('o','0',sep='')             ->      Working fine
