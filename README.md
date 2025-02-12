@@ -1,5 +1,14 @@
 #   Python
 
+##  Dtypes:
+-   String:                 x = "hi"
+-   Int                     x = 5
+-   Float                   x = 5.5
+-   List                    x = [1,2,3,3]
+-   Dictonary               x = {1:3,"name": "Tomato"}
+-   Set                     x = {1,2,3}
+-   NoneType                x = None
+
 
 ### Behaviour of ++ and -- in python
 -   ++ and -- is not treated as increment or decrement operators in python as it does in C++.
@@ -16,15 +25,10 @@
         7 --- -- - - - a  =>    7 + 7       =>  14
     ```
 
-##  Dtypes:
--   String:                 x = "hi"
--   Int                     x = 5
--   Float                   x = 5.5
--   List                    x = [1,2,3,3]
--   Dictonary               x = {1:3,"name": "Tomato"}
--   Set                     x = {1,2,3}
--   NoneType                x = None
+### Python Functions
+-   reversed(): Take any iterable and reversed it and returns the iteratorfor this reveresed object.
 
+    ![reversed function](./Outputs/reversed_function.png)
 
 ### False Values:
 -   False
@@ -108,6 +112,7 @@
 
 ### Ordered Dictonary from collections
 -   It has all properties of dictonary in addition to one quality of preserving the insertion order of elements.
+-   If you change the value of any key, there will be no change in its position.
 
 ```
     from collections import OrderedDict
@@ -122,10 +127,128 @@
     print(od1 == od2)   =>  Output: False
 ```
 
+-   Reverse the order of OrderedDict:
+    ```
+        od1 = OrderedDict(reversed(list(od1.items())))
+    ```
+
+-   popitem(last=True)   =>  remove the last (key-value) and returns it. Or specify an index to remove specific item.
+
+
+### Functions
+-   Functions are the block of statements which will executed when called.
+-   Instead of writting a code again and again we declare function to reuse it.
+
+-   Parameters: The values that a function expect as declared in its definetion are called parameters (params).
+-   Arguments: The actual values passed to functions when called are called arguments.
+
+-   #### Type-Hint:  
+    -   A data type is specified as a hint which is just for understanding purpose.
+    -   It is totally ignored by the python interpreter and will not be executed.
+
+-   Python supports 4 types of arguments:
+    -   Default arguments:
+        -   Rule: There should be no any non-default argument followed by default argument.
+        ```
+            def func(a, b=10):
+                print(a,b)
+
+
+            func(5,5)   =>  output: 5 5
+            func(5)     =>  output: 5 10
+        ```
+
+    -   Keyword arguments:
+        -   Arguments passed with parametric names
+        -   Used when order of parameters are not known.
+        ```
+            def func(fname, lname):
+                print("Fname: ", fname," Lname: ", lname)
+
+            func(lname='Ranparia', fname='Yashu')   =>  Output: Yashu Ranparia
+        ```
+
+    -   Positional arguments:
+        -   When values are passed without parametric names they are considered as positional arguments.
+        ```
+            def func(fname, lname):
+                print("Fname: ", fname," Lname: ", lname)
+
+            func('Yashu', 'Ranparia')   =>  Output: Yashu Ranparia
+        ```
+
+    -   Arbitary arguments:
+        -   We can pass a variable number of arguments while calling a function.
+        ```
+            def func(*args):
+                for arg in args:
+                    print(arg,end=' ')
+
+            func('Yashu', 'Ranparia')   =>  Output: Yashu Ranparia
+        ```
 
 ### Pass Keyword
 -   Pass indicates that the line must not be executed by the interpreter
 
+
+### Packing and Unpacking
+-   Here * and ** is used  for packing and unpacking tuples and dictonary.
+-   A * operator is used for sequence and ** is used for key-value pairs
+
+-   Packing: When we do not know how many arguments will be passed to function, we can use packing to pack any number of arguments into a single variable.
+```
+    def hobbies(*args);
+        for hobby in args:
+            print(hobby)
+
+    hobbies("Cricket", "CP", "Automation")    <-   These arguments are packed as tuple named args 
+```  
+
+
+-   Unpacking: When a function expects a number of arguments (say 5) and I have already a list or a tuple of these arguments I can pass the unpacked list or tuple.
+```
+    def details(fname, lname, city, state, college):
+        print('Anything')
+
+    
+    # I am getting user input as list
+    user_detail = ["Yashu", "Ranparia", "Admedabad", "Gujarat", "CHARUSAT"]
+
+    details(*user_details)  <-  Unpacking of a list
+```
+
+-   *args expects comma seperated objects
+-   **kwargs used specifically for named arguments, where it packs the named arguments in form of key:value pair i.e. dictonary.
+
+-   **kwargs usage: <Passed Arguments must be named>
+    ```
+        def details(**kwargs):
+            for key,value in kwargs.items():
+                print(key, ' ', value)
+
+
+        details(name="Yashu", cmp="Simform", hobbies=["Cricket", "CP", "Automation"])
+    ```
+
+### Print function 
+```
+    print("Hello", "Yashu", sep=" ", end=". ", file = sys.stdout (default), flush = False (default))
+    print("How are you?")
+    Output: Hello Yashu. How are you?
+```
+-   Objects: Strings or other objects passed as arguments to display as output.
+-   sep:    The specified string will used to seperate the given objects.
+-   end:    The print statement will end with the specified string in end.
+-   file:   Print statement outputs by default in sys.stdout that is system console. But if we specify the file object in writing mode it will output it in to specified file.
+-   flush:  By default false, if True it immediately flushes the buffer.
+
+-   Buffering & Flushing:
+    -   Print() will push the output string to buffer.
+    -   The buffer will flush when:
+        -   Buffer is full
+        -   Newline ('\n') is encountered
+        -   program ends
+        -   flush = true
 
 ### Garbage collection
 -   Python has a support for inbuilt garbage collection using reference counter and cyclic garbage collector
