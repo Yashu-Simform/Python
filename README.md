@@ -1,4 +1,5 @@
 #   Python
+-   Try to import this
 
 ##  Dtypes:
 -   String:                 x = "hi"
@@ -12,6 +13,7 @@
 
 ### Behaviour of ++ and -- in python
 -   ++ and -- is not treated as increment or decrement operators in python as it does in C++.
+
 -   In python ++ and -- is treated as:
     ```
         a = 7
@@ -142,9 +144,41 @@
 -   Parameters: The values that a function expect as declared in its definetion are called parameters (params).
 -   Arguments: The actual values passed to functions when called are called arguments.
 
+-   #### Docstring
+    -   We can show information about the function in Docstring.
+    -   Docstring will be highlighted when hover over function name
+    ```
+        def sayHello():
+            """
+            This function will print hello when called.
+            """
+
+            print('Hello')
+    ```
+
 -   #### Type-Hint:  
     -   A data type is specified as a hint which is just for understanding purpose.
     -   It is totally ignored by the python interpreter and will not be executed.
+    -   You can specify type-hint using ':' operator
+    ```
+        a: int = 5
+        b: str = 'String is there.'
+
+        def func(name: str, age: int) -> int:
+            print(name, age, sep='\n')
+            return 0
+
+    ``` 
+    -   We can use <b>mypy</b> for static type checking in python:
+        ```
+            #Install
+            pip install mypy
+
+            #Static type checking
+            mypy myfile.py
+        ```
+        -   The mypy will check the type hints and give error message if any, these error messages are just showing type errors as per type-hints.
+        -   Our program will run even if the mypy has showed error messages as type-hints are just like comments when interpreted by python interpreter.
 
 -   Python supports 4 types of arguments:
     -   Default arguments:
@@ -185,6 +219,12 @@
                     print(arg,end=' ')
 
             func('Yashu', 'Ranparia')   =>  Output: Yashu Ranparia
+
+
+            def func(**kwargs):
+                print(kwargs)
+
+            func(name="Yashu", cmp="Simform")   =>  Output: {name: "Yashu", cmp: "Simform"}
         ```
 
 ### Pass Keyword
@@ -217,10 +257,26 @@
     details(*user_details)  <-  Unpacking of a list
 ```
 
+-   Unpacking a dictonary:
+    ```
+        def details(fname, lname, city, state, college):
+            print(fname, lname, city, state, college, sep=' ')
+
+        # I have user input as dictonary
+        user_input = {"fname": "Yashu", "lname": "Ranparia", "city": "Ahmedabad", "State": "Gujarat", "college": "CHRUSAT"}
+
+        details(*user_details)  =>  Output: fname lname city State college
+
+        details(**user_details) =>  Output: Yashu Ranparia Ahmedabad Gujarat CHARUSAT
+    ```
+
+    -   ** will pass the values of the dictonary.
+    -   A * will only pass the keys of dictonary.
+
 -   *args expects comma seperated objects
 -   **kwargs used specifically for named arguments, where it packs the named arguments in form of key:value pair i.e. dictonary.
 
--   **kwargs usage: <Passed Arguments must be named>
+-   **kwargs usage: <! Passed Arguments must be named !>
     ```
         def details(**kwargs):
             for key,value in kwargs.items():
@@ -261,3 +317,84 @@
 
     It remove all the references to a and free up the memory.
     ```
+
+
+### Standard Libraries
+-   Libraries provided by the python itself as builtin support.
+
+    #### math
+    -   Provides all mathematical functions
+
+    #### webbrowser
+    -   Provides functions to interact with browsers.
+    -   Can go on a specific URl, open new window of browser, etc.
+
+
+
+### OOP in Python
+-   Class:  A relatable object which has its own characteristics (attributes) and behaviour (Methods).
+
+-   In programming a class declaration is just a blueprint for an object instance.
+
+-   Attributes: Variables associated with the class are known as attributes.
+-   Methods: Functions associated with the class are known as methods.
+
+-   Class Variable and Instance Variable
+    -   Class Variables:    Variables declared outside the methods of the class and shared among all the instances of the class.
+    -   Instance Variable:  Variables declared within methods or using self param are Instance Variables. Each instance has its own copy of these variables.
+
+    ```
+        class Employee:
+            emp_num = 0     #Class Variable | Shared among all instances
+
+            def __init__(self, fname):
+                self.fname = fname      #Instance Variable
+                self.salary = salary    #Instance Variable
+                self.initLeaves()
+
+            def initLeaves(self):
+                self.leaves = 0     #Instance Variable
+    ```
+
+    -   Class variables can be accessed as:
+    ```
+        Employee.emp_num = 5    #willl change the value for all instances
+    ```
+
+-   Example: 
+```
+
+class Employee:     #Declaration of Class named Employee
+    
+    #Class Variables/Attribute
+    emp_num = 0
+
+    #constructor or init method
+    def __init__(self, fname, lname, salary, joining_date):
+        
+        # Attributes
+        self.fname = fname
+        self.lname = lname
+        self.salary = salary
+        self.joining_date = joining_date
+        pass
+
+
+    # Methods
+    def get_full_name(self):
+        return self.fname + ' ' + self.lname
+    
+```
+
+-   #### Instance-Methods | Class-Methods | Static-Methods
+    -   <b>Instance methods</b>: The normal methods of the class where an instance reference is passed when any instance try to access it.  
+
+    -   <b>Class-Methods</b>: The methods declared using @classmethod decorator and it takes class as param instead of instance reference. You can call it using any insatnce but still a class is passed as param not an instance reference.
+        -   ![alt text](Outputs/classmethod.png)
+        -   Classmethod as an alternate constructor:
+            -   Classmethods can be used as alternate constructor when you want to initiallize an object with some different format of argumetns than original constructor.
+            -   ![alt text](Outputs/classmethod_as_alt_constructor.png)
+                ![alt text](Outputs/usage_class_method_alt_const.png)
+
+
+    -   <b>Static Methods</b>: The methods which do not require and use instance reference or class reference, and

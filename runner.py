@@ -1,5 +1,4 @@
 import time
-
 # # Without flush
 # print("Start 1")
 # time.sleep(2)
