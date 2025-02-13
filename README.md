@@ -414,8 +414,8 @@ class Employee:     #Declaration of Class named Employee
     -   It referes to special methods declared with double underscore at the beginning and end of the name of methods also known as <b>Magic Methods</b>.  
     -   Usually these methods are declared to invoke impliitly by the python at certain situations.
     -   Examples:
-        -   __add__() method is called when we do (a + b).
-        -   __len__() method is called when we do len(xyz)
+        -   \__add__() method is called when we do (a + b).
+        -   \__len__() method is called when we do len(xyz)
 ```
 class Equipment:
     __total_eqip = 0
