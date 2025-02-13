@@ -330,7 +330,6 @@
     -   Can go on a specific URl, open new window of browser, etc.
 
 
-
 ### OOP in Python
 -   Class:  A relatable object which has its own characteristics (attributes) and behaviour (Methods).
 
@@ -397,4 +396,148 @@ class Employee:     #Declaration of Class named Employee
                 ![alt text](Outputs/usage_class_method_alt_const.png)
 
 
-    -   <b>Static Methods</b>: The methods which do not require and use instance reference or class reference, and
+    -   <b>Static Methods</b>: The methods which do not require and use instance reference or class reference are called static methods.
+        -   Static methods do not know the state of class and also can not change the state of class, they are just present inside the class because they have some logical connection with the class.
+        -   We can access static methods using class name or instance.
+        -   
+            ![alt text](Outputs/static_methods.png)
+
+
+-   <b>Remember</b>: When any insatnce tries to access the class variable or any methods interpreter tries to look it in instance's namespace first, then if not found it goes to class namespace. It is called Method Resolution Order (MRO).
+
+
+
+### Operator Overloading or Magic Methods Overriding
+
+-   #### Dunder - Double Underscore
+    -   Dunder stands for Double Underscore in Python
+    -   It referes to special methods declared with double underscore at the beginning and end of the name of methods also known as <b>Magic Methods</b>.  
+    -   Usually these methods are declared to invoke impliitly by the python at certain situations.
+    -   Examples:
+        -   __add__() method is called when we do (a + b).
+        -   __len__() method is called when we do len(xyz)
+```
+class Equipment:
+    __total_eqip = 0
+    def __init__(self,name,quantity,price):
+        self.name = name
+        self.quantity = quantity
+        self.price = price
+        pass
+
+    def get_details(self):
+        print(self.name, self.quantity,sep=' ')
+
+
+    #Operator Overloading or Magic Methods Overriding
+    def __add__(self, other):
+        return (self.price * self.quantity + other.price * other.quantity)
+
+    def __len__(self):
+        return self.quantity
+
+
+hammer = Equipment("Hammer", 5, 120)
+screw = Equipment("Screw", 50, 5)
+
+print('Total Price: ', (hammer + screw))
+
+print('Total Quantity: ', len(hammer))
+
+```
+
+Output:
+
+![Operator Overloading](Outputs/operator_overloading.png)
+
+
+
+### Inheritence
+-   A class inherit the attributes and methods from another class.
+
+-   <b>Method Resolution Order</b>:
+    -   When we try to access the attributes or methods using class name or using instances the python interpreter first tries to find it in the namespace of the calling reference.
+    -   Python MRO uses C3 Linearization Algorithm
+    -   It is very helpful to maintain the order of the methods specifically in multiple inheritance.
+    -   Example:
+    ```
+        class A:
+            def method(self):
+                print('A',end='')
+
+
+        class B(A):                 &       class C(A)
+            def method(self):                   def method(self):
+                print('B',end='')                          print('C',end='')
+                super().method()                    super().method()
+
+        class D(B, C):
+            def method(self):
+                print('D',end='')
+                super().method()
+
+
+
+        d = D()
+        d.method()
+
+
+        Output:
+        D -> B -> C -> A
+
+        When you do same in C++:
+        Output: D -> B -> A -> C -> A
+
+    ```
+
+    - C3 Linearization Algorithm :
+        -   Order is preserved as Left to Right
+        -   Level order is preserved from child towards parent
+    ```
+            start -> D      (Level 0)
+
+                   B    C   (order preserved as: Left to right) (Level 1)
+
+                     A          (Level 2)
+    ```
+
+
+-   How to inherit:
+    ```
+        from oops import Employee
+
+        class Developer(Employee):
+            def __init__(self, *emp_Det, dept):
+                super().__init__(*emp_Det)
+                self.dept = dept
+                pass
+
+            def get_details(self):
+                print('Name:', self.fname, self.lname,sep=' ',end='\n')
+                print('Salary: ',self.salary)
+                print('Joining date: ', self.joining_date)
+    ```
+
+-   We can use super method inside the subclass in order to access the parent class attributes and methods. 
+
+-   super(): super method in python creates a temperory object which allows us to access all the attributes and methods of the super or parent class, like super().name_of_attr
+
+
+-   #### Abstract Class and Abstract Methods
+    -   We can declare the class as abstract using ABC class from abc module
+    -   Abstract Class: Class inherited using ABC class and must have at least one abstract method.
+    -   Abstract Method: Method applied decorator @abstractmethod and has just pass statement in body are abstarct methods.
+
+    ```
+    from abc import ABC, abstractmethod
+
+    class TheThread(ABC):
+
+        @abstractmethod
+        def run():
+            pass
+
+    obj = TheThread()
+    ```
+    - Produce an error:
+    ![Abstract error](Outputs/abstract_error.png)
