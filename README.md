@@ -1,7 +1,7 @@
 #   Python
 -   Try to import this
 
-##  Dtypes:
+###  Dtypes:
 -   String:                 x = "hi"
 -   Int                     x = 5
 -   Float                   x = 5.5
@@ -306,6 +306,39 @@
         -   program ends
         -   flush = true
 
+
+### Decorators
+-   Decorators provides a way to add extra functionalities to functions with altering them.
+-   Decorators are the functions which takes other function as argument and returns a wrapper function which have implemented something before and after call of original function thus adding extra functionalities to original function.
+
+[Decorators](decorator.py)
+
+```
+def decorator_function(original_function):
+    def wrapper_function(*args):   
+        print('Before!')
+        ans = original_function(*args)
+        print('Sum is: ', ans)
+        print('After!')
+
+    return wrapper_function
+
+
+@decorator_function
+def add(*args):
+    print('Adding values!')
+    ans = 0
+    for x in args:
+        ans = ans + x
+        pass
+
+    return ans
+
+
+add(2,3,4,5)
+```
+
+
 ### Garbage collection
 -   Python has a support for inbuilt garbage collection using reference counter and cyclic garbage collector
 -   reference counter: Maintains the records for number of refernces for a particular variable, if it is 0 then it release out the memory space for that variable
@@ -523,18 +556,75 @@ Output:
 -   super(): super method in python creates a temperory object which allows us to access all the attributes and methods of the super or parent class, like super().name_of_attr
 
 
+#### Multiple Inheritance
+-   A subclass with multiple parent classes.
+-   ##### How to access the method of specific parent 
+-   
+    ```
+        class A:
+            def __init__(self, name):
+                self.name = name
+                pass
+
+            def printD(self):
+                print(self.name)
+
+
+        class B(A):
+            def __init__(self, surname):
+                self.surname = surname
+                pass
+
+            def printD(self):
+                print(self.surname)
+
+
+        class C(A):
+            def __init__(self, home):
+                self.home = home
+                pass
+
+            def printD(self):
+                print(self.home)
+
+
+        class D(B,C):
+            def __init__(self, **details):
+                self.contact = details['contact']
+                B.__init__(self, details['surname'])
+                C.__init__(self, details['home'])
+                A.__init__(self, details['name'])
+                pass
+
+            def printD(self):
+                #2 ways to access the methods of parents in multiple inheritance.
+                B.printD(self)
+                super(B,self).printD()  #Calls the method of class C not B
+                A.printD(self)
+                print(self.contact)
+
+
+        objD = D(name="Yashu", surname='Ranparia', home='Junagadh', contact='1234567890')
+        objD.printD()
+    ```
+-   2 ways:
+    -   super(B,self).printD()  # Interpreter will look for method just after the specified reference
+    -   B.printD(self)      #Directly calls printD method of class B
+
 -   #### Abstract Class and Abstract Methods
     -   We can declare the class as abstract using ABC class from abc module
     -   Abstract Class: Class inherited using ABC class and must have at least one abstract method.
-    -   Abstract Method: Method applied decorator @abstractmethod and has just pass statement in body are abstarct methods.
+    -   Abstract Method: Method with decorator @abstractmethod and has just pass statement in body are abstarct methods. 
+        -   In python @abstractmethod mentioned for a method tells interpreter that the method must be implemented by the subclass.
+        -   In python if we have mentioned @abstractmethod and stil  providing some implementation to the method it will run without any error.
 
     ```
     from abc import ABC, abstractmethod
 
     class TheThread(ABC):
 
-        @abstractmethod
-        def run():
+        @abstractmethod 
+        def run():      #Remember: If you mention implementation still it will be an abstract method
             pass
 
     obj = TheThread()
