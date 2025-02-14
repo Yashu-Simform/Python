@@ -82,6 +82,12 @@
     -   count(element):    It counts the number of occurence of given element with time complexity of O(n)
 
 
+### Tuples
+-   Properties:
+    -   Immutable
+    -   Hashable - Tuples can be the key in dictonary and values in set if all elements are also hashable.
+
+
 ### Dictonary
 -   Can be declared as:
     -   x = {}      ->      type(x)     ->      type='dict'

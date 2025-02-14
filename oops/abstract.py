@@ -11,6 +11,7 @@ class TheThread(ABC):
 class MyThread(TheThread):
 
     def run():
+        print('Hi')
         pass
 
     def walk():
