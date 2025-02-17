@@ -637,3 +637,98 @@ Output:
     ```
     - Produce an error:
     ![Abstract error](Outputs/abstract_error.png)
+
+
+### File Handling
+-   Opening a file:
+    ```
+        f = open('test.txt')
+    ```
+
+-   #### Context Manager (with - statement)
+    -   <b>with</b> provides a resource management by creating a context for specific resource access.
+    -   'with' creates a context for accessing any recource say for I/O operations.
+    -   It call '\__enter__' method which do the job of acquiring the lock and possession over resource to get accessed and it can return the value as object to perform operation over the accessed resource (here file).
+    -   At the end of the context block it calls the '\__exit__' method which takes arguments (exception_type, exception_value, traceback), if any exception occurs in the execution block these values will be passed to '\__exit__' method which will show up the exception message.
+    -   '\__exit__' method does the job of releasing the lock over resources and end the context of resource. It closes the files, so we do not need to handle all these explicitly.
+    -   
+        ```
+            with open('test.txt','w') as f:
+                print(f.name)
+        ```
+        -   #### What 'with' will do here
+            -   It calls the f.\__enter__() method first and f.\__exit__() at last.
+            -   Thus we can only use the object which has a support for context management protocol which have theses implemented methods {\__enter__ and \__exit__} 
+            -   That's why the below code will not work.
+                ```
+                    a = 5
+
+                    with a:
+                        print('Hello')
+                ```
+
+
+    -   Custom Context Manager:
+        ```
+
+            class MyContextManager:
+                def __enter__(self):
+                    print('Entering the context block.')
+                    return self
+                
+                def __exit__(self, exc_type, exc_value, traceback):
+                    print('Closing the context.')
+
+            with MyContextManager():
+                print('Accessing the resources.')
+        ```
+        ![Context Manager](Outputs/contextmanager.png)
+
+-   Opening file with context manager:
+    ```
+        with open('test.txt') as f:
+            print(f.name)
+    ```
+
+-   Modes of opening a file:
+    -   r: read a file, raise error if file does not exist
+    -   r+: read and write to a file, raise error if file does not exist
+    -   rb and rb+: specifically for binary data
+    -   w: write to a file, creates a file if it does not exist
+    -   w+: write and read a file, creates a file if it does not exist
+    -   wb and wb+: specifically for binary data
+    -   a: append to a file, creates a file if it does not exist
+    -   a+: append and read a file, creates a file if it does not exist
+    -   ab and ab+: specifically for binary data
+    -   x: Specifically to create a file, raise error if file already exist
+    -   x+: Specifically to create a file with read and write mode, raise error if file already exist
+    -   xb and xb+: specifically for binary data
+
+
+-   Read data from file:
+    ```
+        with open('test.txt', 'r') as f:
+            print(f.read(10)) <- Reads only 10 characters from file
+            print(f.readline())     <-  Can specify the number of chars to read
+            print(f.readlines())    <-  Can specify the number of characters to read take whole line if specified character limit permits 
+            print(f.read())     <-  Reads entire data
+    ```
+
+-   Writing to a file:
+    ```
+        with open(file_path, 'w') as f:
+            f.write('Warning! Do not delete.')
+            f.writelines(['Do it as told to you.\n', 'Okay! I will do it.\n'])
+    ```
+
+-   Get the file pointer location:
+    ```
+        with open(file_path, 'a') as f:
+            print(f.tell())     <-  Returns the location of the file pointer
+    ```
+
+-   Change the location of file pointer:
+    ```
+        with open(file_path, 'a') as f:
+            print(f.seek(0))     <-  Moves the file pointer to beginning of the file
+    ```
