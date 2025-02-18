@@ -11,6 +11,27 @@
 -   NoneType                x = None
 
 
+### is vs ==
+-   'is' operator returns true if two objects are referencing to same memory location.
+-   '==' operator returns true if two objects are same based on their values.
+
+    ```
+        a = 3
+        b = 3
+
+        id(a) is equal to id(b) 
+        then 
+        a is b      <- returns True
+
+        a = [1,2,3]
+        b = [1,2,3]
+
+        here id(a) is not equal to id(b)
+
+        a == b      <- returns True
+        a is b      <- returns False
+    ```
+
 ### Behaviour of ++ and -- in python
 -   ++ and -- is not treated as increment or decrement operators in python as it does in C++.
 
@@ -28,7 +49,7 @@
     ```
 
 ### Python Functions
--   reversed(): Take any iterable and reversed it and returns the iteratorfor this reveresed object.
+-   reversed(): Take any iterable and reversed it and returns the iterator for this reveresed object.
 
     ![reversed function](./Outputs/reversed_function.png)
 
@@ -732,3 +753,162 @@ Output:
         with open(file_path, 'a') as f:
             print(f.seek(0))     <-  Moves the file pointer to beginning of the file
     ```
+    ```
+
+
+### Collections module
+-   Collections module provides data structures or containers to store and retrive data with specific characteristics.
+
+-   #### Counter
+    -   It is a subclass of dict
+    -   A data structure specifically made to store the count of occurences of elements in an iterable.
+    -   
+        ```
+            from collections import Counter
+            cntr = Counter([1,3,1,2,4,5,4,4])
+
+            print(cntr.items())
+            print(cntr.most_common(1))
+            for i in cntr.elements():
+                print(i)
+        ```
+        ![Counter](Outputs/counter.png)
+
+    
+-   #### NamedTuple
+    -   A subclass of tuple which has named field attributes.
+    -   Immutable like tuple
+    -   Initialize namedtuple(typename, field_names):
+        ```
+            Point = namedtuple('Point', ['x', 'y'])
+            pt = Point(2,3)
+            print(pt.x, pt.y)
+        ```
+    -   It provides both access from key-value and index, the functionality that dictonary lack.
+    - Use case: When we need an immutable class like structure which can provide a way to access the values using names.
+
+
+-   #### Ordered Dictonary
+    -   It is a subclass of dict
+    -   It differs from unordered dict by preserving the order of insertion of keys.
+    -   If value of any key changes, order will not change.
+    -   
+        ```
+            a = {1:1, 2:2}
+            c = {2:2, 1:1}
+
+            from collections import OrderedDict
+            b = OrderedDict()
+            d = OrderedDict()
+            b[2] = 2
+            b[1] = 1
+
+            d[1] = 1
+            d[2] = 2
+
+            print(a == c)
+            print(b == d)
+        ```
+        ![ordered dict](Outputs/orderdict.png)
+
+    -   provides a method called - popitem() which follow LIFO order by default and FIFO order if we set last = false.
+    -   delete a key-value using pop(specific-key)
+
+-   #### Deque
+    -   Deque - A double ended queue
+    -   Allows both LIFO and FIFO operations on a same data structure.
+    -   Initialize:
+        ```
+        q = deque([1,2,3,4,5,6,7,8,9])
+
+        q.append(10)
+        q.appendleft(0)
+        print(q)
+        q.pop()
+        q.popleft()
+        print(q)
+        q.extend([11,12,13])
+        q.extendleft([-1,-2,-3])    # Extends the deque by adding the given iterable in reverse order
+        print(q)
+        ```
+        ![deque](Outputs/deque.png)
+
+-   #### ChainMap
+    -   It stores multiple dictonary into a container
+    -   provides functions to get keys, values and key-value pairs for all dictonaries stored in it. 
+
+-   #### Default Dictonary
+    -   A subclass of dict
+    -   It has a characteristic to initialize the dictonary with default value for keys using factory functions like (list, int, str).
+    -   How to use:
+        ```
+            ddict = defaultdict(str)
+            ddict[1] = 2
+            ddict[2] = 'b'
+
+            print(ddict)
+            print(ddict[3])
+        ```
+
+### Asynchronous Programming
+-   #### Subroutine VS Coroutines
+    -   Subroutines:
+        -   Subroutines: Are functions or procedures which can be called from anywhere in the program. When called the execution control goes to subroutine and when returns control goes back to program where the subroutine is called.
+        -   Subroutines have single entry point and single exit point.
+        -   Uses ```return``` to exit and return the value.
+    -   Coroutine: 
+        -   Are like functions which can suspend and resume whenever needed.
+        -   They can return values and then resume where they left off by preserving the state.
+        -   Used for Asynchronous programming mainly to avoid bloackage due to I/O operations.
+        -   Uses ```yield```  to return with preserving the state. 
+
+-   Coroutines are used to achieve asynchronous programming
+-   coroutines can be defined using ```async``` keyword in function definiton which when called gets awaited using ```await``` keyword or include any awaited instruction.
+    ```
+        import asyncio
+        async def add(val):
+            a, b = val
+            await asyncio.sleep(4)  #awaited instruction
+
+            return a+b
+
+        await add()
+    ```
+
+-   By just calling the function as add() will not work asynchronously, but we have to do:
+    ```
+    def main():
+        task1 = asyncio.create_task(multiply(vals))
+        task2 = asyncio.create_task(add(vals))
+        await task1
+        await task2
+    
+    asyncio.run(main())
+    ```
+
+-   Awaitable objects: 
+    -   Objects which can be used with ```await``` keyword.
+    -   3 objects :
+        -   Coroutines: Defined using ```async def```
+        -   Tasks: Are scheduled coroutines which added into event loop
+        -   Futures: Objects which does not have the value yet but may get in future. Thus these objects may awaited to stop the coroutine execution until the future object gets its result.
+            ```
+                import asyncio
+
+                async def set_future_result(future, result):
+                    await asyncio.sleep(1)
+                    future.set_result(result)
+
+                async def main():
+                    # Create a Future object
+                    future = asyncio.Future()
+
+                    # Schedule a coroutine to set the result of the Future
+                    asyncio.create_task(set_future_result(future, "Hello, Future!"))
+
+                    # Await the Future to get the result
+                    result = await future
+                    print(result)
+
+                asyncio.run(main())
+            ```
