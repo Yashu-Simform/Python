@@ -912,3 +912,16 @@ Output:
 
                 asyncio.run(main())
             ```
+    -   Implementation: ![async_dir](./async/asynchronous_prog.py)
+
+
+### Request Module
+-   Used to make HTTP request and handle responses between client-server.
+-   It supports all HTTP methods: [GET, POST, PUT, PATCH, DELETE, HEAD, OPTIONS] 
+-   Refer HTTP methods here: ![http_methods](./http_mthods/README.md)
+
+
+### Singleton - Design Pattern
+-   It  ensures that a class has only single instance throuout the whole program.
+-   It provides global accessibility and thus has only one state throughout the program.
+-   The class controls its instantiation process to guarente a single instance through out the program.

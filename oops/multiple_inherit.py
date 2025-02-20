@@ -40,6 +40,9 @@ class D(B,C):
         A.printD(self)
         print(self.contact)
 
+    def access_B(self):
+        B.printD(self)
+
 
 objD = D(name="Yashu", surname='Ranparia', home='Junagadh', contact='1234567890')
 objD.printD()

@@ -3,7 +3,6 @@ from oops import Employee
 class Developer(Employee):
     def __init__(self, *emp_Det, dept):
         super().__init__(*emp_Det)
-        print(super().get_full_name())
         self.dept = dept
         pass
 
