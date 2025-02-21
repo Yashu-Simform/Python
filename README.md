@@ -1,5 +1,6 @@
 #   Python
--   Try to import this
+
+-   Try to implement: `import this`
 
 ###  Dtypes:
 -   String:                 x = "hi"
@@ -47,6 +48,15 @@
         7 --- a           =>    7 - (+7)    =>  7 - 7  => 0
         7 --- -- - - - a  =>    7 + 7       =>  14
     ```
+
+### Module vs Package
+-   Module:
+    -   Module is a single python file having `.py` extension and can be imported and used in other files.
+    -   Modules generally contains functions and classes which can be imported and used from any python file.
+-   Package:
+    -   Package is a directory which contain `__init__.py` file and multiple modules within it.
+    -   This `__init__.py` file can be empty or can contain any initialization code for the package.
+    -   Package can be imported as a single unit.
 
 ### Python Functions
 -   reversed(): Take any iterable and reversed it and returns the iterator for this reveresed object.
@@ -117,7 +127,7 @@
 
 -   Properties:
     -   Stores a key value pair
-    -   It internally uses hashing and apply quadratic probation when collisio occurs that is search for the empty slot to store key.
+    -   It internally uses hashing and apply quadratic probation when collision occurs that is search for the empty slot to store key.
     -   Storage, Update and Retrival: Time complexity - O(1)
 
 -   Dictonary methods:
@@ -259,7 +269,7 @@
 
 
 ### Packing and Unpacking
--   Here * and ** is used  for packing and unpacking tuples and dictonary.
+-   Here * and ** is used  for packing and unpacking tuples and dictonary respectively.
 -   A * operator is used for sequence and ** is used for key-value pairs
 
 -   Packing: When we do not know how many arguments will be passed to function, we can use packing to pack any number of arguments into a single variable.
@@ -389,6 +399,7 @@ add(2,3,4,5)
     -   Provides functions to interact with browsers.
     -   Can go on a specific URl, open new window of browser, etc.
 
+    -   And many more ...
 
 ### OOP in Python
 -   Class:  A relatable object which has its own characteristics (attributes) and behaviour (Methods).
@@ -419,6 +430,30 @@ add(2,3,4,5)
     ```
         Employee.emp_num = 5    #willl change the value for all instances
     ```
+
+-   A standard and right way to use Class Variables?
+    -   We can access the class variables using class name and instance.
+    -   As far as just retrival of class variable is concerned we can do it with instance of class.
+    -   For UPDATE, always use CLASS_NAME.class_variable
+    -   If we try to UPDATE using instance.class_variable, it will be a re-assignment operation and thus a new variable with same name as class_variable name is generated in namespace of that instance.
+    -   
+        ```
+            class A:
+                v = [1222]
+
+                def update(self, x):
+                    A.v = x
+                    #!WARNING : self.v = x  Again a re-assignment operation will create a new varaible in instance namespace
+
+            o1 = A()
+            o2 = A()
+            print(f'Memory address of o1.v {id(o1.v)}')
+            print(f'Memory address of o2.v before re-assignment {id(o2.v)}')
+            o2.v = [1222]
+            print(f'Memory address of o2.v after re-assignment {id(o2.v)}')
+            print(f'Memory address of A.v {id(A.v)}')
+        ```
+        ![Output](Outputs/class_variable_case.png)
 
 -   Example: 
 ```
@@ -463,7 +498,7 @@ class Employee:     #Declaration of Class named Employee
             ![alt text](Outputs/static_methods.png)
 
 
--   <b>Remember</b>: When any insatnce tries to access the class variable or any methods interpreter tries to look it in instance's namespace first, then if not found it goes to class namespace. It is called Method Resolution Order (MRO).
+-   <b>Remember</b>: When any insatnce tries to access the class variable or any methods interpreter tries to look it in instance's namespace first, then if not found it goes to its ancestors namespace. It is called Method Resolution Order (MRO).
 
 
 

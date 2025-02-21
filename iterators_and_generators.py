@@ -91,3 +91,18 @@ for i in a:
     ad = id(i)
     getval = ctypes.cast(ad, ctypes.py_object).value
     # print(getval)
+
+
+#---------Return the value when functoin starts its execution again 
+def fun():
+    value = yield 4
+
+    print(value)
+
+    yield (value * 10)
+
+
+a = fun()
+print(next(a))
+
+print(a.send(5))
