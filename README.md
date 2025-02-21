@@ -960,3 +960,5 @@ Output:
 -   It  ensures that a class has only single instance throuout the whole program.
 -   It provides global accessibility and thus has only one state throughout the program.
 -   The class controls its instantiation process to guarente a single instance through out the program.
+-   Here a dictonary is maintained as private variable in class which preserves the key-value pair as {class_name: instance}, if present return that instance only otherwise add a new instance.
+-   Refer implementation: [Singleton](design_patterns/singleton.py)
