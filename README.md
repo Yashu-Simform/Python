@@ -63,6 +63,34 @@
 
     ![reversed function](./Outputs/reversed_function.png)
 
+-   zip(): It is used to combine multiple iterables into a single common iterable. It combines corresponding elements of multiple iterables into a tuple and thus form a new iterable. In case of uneven length of iterables zip() form tuples till shortest iterable.
+    ```
+        a = ['Virat', 'Dhoni', 'Rohit', 'Shikhar', 'Jassi']
+        b = [18, 7, 45]
+
+        for i in zip(a, b):
+            print(i)
+
+        Output: ('Virat', 18), ('Dhoni', 7), ('Rohit', 45)
+    ```
+    -   intertools.zip_longest(a,b): works same as zip but forms tuples until the longest iterable gets exhausted, it fills None value in iterable already gets exhausted or iterated.
+
+-   max(objects of similar types, key, default): It only compares similar objects or if key is set then returns max value according to the return value of key.
+    ```
+        a = [12, 'hello', {1,3,6,7}]
+        b = [12, 'hello', {1,3,6,7}, 44, 576]
+        max(a,b, key=len)
+
+        Outputs: [12, 'hello', {1, 3, 6, 7}, 44, 576]
+    ```
+    -   min() also works in similar way just returning the minimum value.
+
+-   sum(iterable containing int values): Returns sum of all elements in an iterable.
+
+-   filter(function, sequence): Function took a single element as argument and returns True if it should be considered otherwise return False. Based on this function filter() method returns an iterator of the filtered data.
+
+
+
 ### False Values:
 -   False
 -   None
@@ -112,6 +140,11 @@
     -   clear():    Removes all the elements from the list
     -   count(element):    It counts the number of occurence of given element with time complexity of O(n)
 
+-   List Slicing:
+    -   list_name[start : end : step]
+    -   start: Starting index (inclusive), default is 0.
+    -   end: Last index (exclusive), default is (len(list_name) - 1)
+    -   step: Specifies interval between two considered elements, default is 1.
 
 ### Tuples
 -   Properties:
@@ -375,6 +408,18 @@ def add(*args):
 add(2,3,4,5)
 ```
 
+### Iterators and Generators
+-   Iterators: Used to iterate over an iterable objects. 
+    -   Follows lazy execution
+    -   Uses a single block of memory to access the value of element.
+    -   `__iter__()` method returns an iterator, `__next__()` it returns the next value and also make iterator points to this next value.
+    -   Implemented using class
+
+-   Generators: Used to generate the space optimized iterable
+    -   Follows lazy execution
+    -   Implemented using functions
+    -   Uses yield to temporary stop execution and return value until control returns back to it.
+    -   yield returns an iterator, thus every generator is an iterator.
 
 ### Garbage collection
 -   Python has a support for inbuilt garbage collection using reference counter and cyclic garbage collector
