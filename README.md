@@ -1007,3 +1007,18 @@ Output:
 -   The class controls its instantiation process to guarente a single instance through out the program.
 -   Here a dictonary is maintained as private variable in class which preserves the key-value pair as {class_name: instance}, if present return that instance only otherwise add a new instance.
 -   Refer implementation: [Singleton](design_patterns/singleton.py)
+
+
+### Monkey-Patching
+-   Monkey patching is a way to modify behaviour of our code or functionality dyamically at runtime.
+-   Example:
+    ```
+        class ScoobyDoo:
+            def say(self):
+                print('Hello')
+
+        ScoobyDoo.say = lambda self: print('Scooby Dooo....')
+
+        obj = ScoobyDoo()
+        obj.say()   <-  Output: Scooby Dooo....
+    ```
