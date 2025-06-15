@@ -106,3 +106,24 @@ a = fun()
 print(next(a))
 
 print(a.send(5))
+
+print('-----------------------------------------------------------')
+#Example 
+def func2():
+    print("Generator started")
+    aval = 'hi'
+    value = yield aval
+    if value == 'mango':
+        print('Fruit')
+        yield 'fruit'
+    else:
+        raise StopIteration("Invalid value passed to generator")
+    
+gen = func2()
+next(gen)  # Start the generator
+try:
+    print(gen.send('mango'))  # Send a value to the generator       
+except StopIteration as e:
+    print(f"Generator stopped with message: {e}")
+        
+    
