@@ -495,6 +495,7 @@ def decorator_function(func):
     -   Follows lazy execution
     -   Generator expression: `(expression for item in iterable if condition)` returns a generator object.
     -   Methods: send(), thorw(), close()
+        -   We must prime the generator object to use these methods, prime means to initiate the first execution phase and reach to first yield statement, so that it can use send and throw. 
         -   generator_obj.send():
             -   It injects the value to the generator and becomes the result of the yield where it has paused the execution. 
             -   send() method injects value and also resumes execution until next yield statement or function termination, it does not call the next method but does the job of it after injecting the value.
@@ -502,6 +503,7 @@ def decorator_function(func):
             -   It is used to raise any error at any particular state. `generator.throw(type, value=None, traceback=None)`
         -   generator_obj.close():
             -   Raises a GeneratorExit exception inside the generator.
+            -   We can close generator wihout even prime it.
 
 ### Garbage collection
 -   Python has a support for inbuilt garbage collection using reference counter and cyclic garbage collector
