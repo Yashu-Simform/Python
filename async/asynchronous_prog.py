@@ -49,7 +49,7 @@ async def waiter(task):
     while task.done:
         pass
 
-async def handler():
+async def main_coroutine():
     print('Tasks started')
     vals = await take_userinput()
     batch = asyncio.gather(batch1(vals), batch2(vals))
@@ -58,4 +58,4 @@ async def handler():
     print('All task done!')
 
 
-asyncio.run(handler())
+asyncio.run(main_coroutine())

@@ -3,13 +3,24 @@
 -   Try to implement: `import this`
 
 ###  Dtypes:
--   String:                 x = "hi"
--   Int                     x = 5
--   Float                   x = 5.5
--   List                    x = [1,2,3,3]
--   Dictonary               x = {1:3,"name": "Tomato"}
--   Set                     x = {1,2,3}
--   NoneType                x = None
+-   Numeric:
+    -   int
+    -   float
+    -   c   omplex
+-   Sequence
+    -   str
+    -   list
+    -   tuple
+-   Mapping Type:
+    -   dict
+-   Boolean:
+    -   bool
+-   Set Type:
+    -   set, frozen-set
+-   Binary Types
+    -   bytes, bytearray, memoryview
+-   NoneType
+    -   None
 
 
 ### is vs ==
@@ -89,8 +100,6 @@
 
 -   filter(function, sequence): Function took a single element as argument and returns True if it should be considered otherwise return False. Based on this function filter() method returns an iterator of the filtered data.
 
-
-
 ### False Values:
 -   False
 -   None
@@ -150,6 +159,7 @@
 -   Properties:
     -   Immutable
     -   Hashable - Tuples can be the key in dictonary and values in set if all elements are also hashable.
+-   Once the tuple is created we cannot add or remove element from the tuple. Also we can not change which index will point to which element.
 
 
 ### Dictonary
@@ -296,9 +306,21 @@
 
             func(name="Yashu", cmp="Simform")   =>  Output: {name: "Yashu", cmp: "Simform"}
         ```
+    ### First Class Objects or citizens
+    -   In python functions are `First Class Objects`, which means functions are treated as any other variables or objects.
+    -   Functions can be assigned to any other variable, or you can assign anything to the function name which will change its type as per the type of assigned variable.
+    -   If any programming language treats functions as any other variable or objects like integer, string, etc. then it is said that the language support First Class Functions or Citizens.
 
-### Pass Keyword
--   Pass indicates that the line must not be executed by the interpreter
+    ### Higher Order Functions(HOF):
+    -   A type of a function which takes any other function as argument or returns any other function as result, then a function is called as Higher Order Function. 
+
+### Pass Keyword and Ellipsis Object: Non operational indicator
+-   #### Pass Keyword
+    -   Pass indicates that the line must not be executed by the interpreter
+
+-   #### Ellipsis object (...)
+    -   It is a singleton object thus only a single object throughout the program.
+    -   Ellipsis object is represented by `...` used as placeholder in code statements, to show that a part of statement is intentionally missing.
 
 
 ### Packing and Unpacking
@@ -376,9 +398,8 @@
         -   program ends
         -   flush = true
 
-
 ### Decorators
--   Decorators provides a way to add extra functionalities to functions with altering them.
+-   Decorators provides a way to modify the behaviour of functions without changing the actual source code.
 -   Decorators are the functions which takes other function as argument and returns a wrapper function which have implemented something before and after call of original function thus adding extra functionalities to original function.
 
 [Decorators](decorator.py)
@@ -393,6 +414,8 @@ def decorator_function(original_function):
 
     return wrapper_function
 
+what actually happens:
+add = decorator_function(add)   #Python supports First Class Functions
 
 @decorator_function
 def add(*args):
@@ -408,18 +431,77 @@ def add(*args):
 add(2,3,4,5)
 ```
 
-### Iterators and Generators
--   Iterators: Used to iterate over an iterable objects. 
-    -   Follows lazy execution
-    -   Uses a single block of memory to access the value of element.
-    -   `__iter__()` method returns an iterator, `__next__()` it returns the next value and also make iterator points to this next value.
-    -   Implemented using class
+-   Decorator is a function which takes another function or callable object as argument, it has wrapper function declared within it which do something before and after the original function passed as arg, then the decoartor function returns thiswrapper function as result.
+-   Then we can do reassignment to the original function as `add = decorator_function(add)`.
+-   Python has one special sytax for this using `@` symbol. We can decalre the decorator function just above the function definetion which will do the function reassignment for us.
+-   <b>Note</b>: When we apply decorator it is basically the reassignment, so the metadata, the docstring, etc related to orignal function gets lost. In order to avoid this we have functools.wrap which is used to preserve this metadata of the original function after getting reassingment also.
+```
+def decorator_function(func):
+    @functools.wraps(func)  # Used to preserve the docstrings and other information.
+    def wrapper(*args, **kwargs):
+        print("Decorator One: Before")
+        result = func(*args, **kwargs)
+        print("Decorator One: After")
+        return result
+    return wrapper
+```  
 
--   Generators: Used to generate the space optimized iterable
+### Iterators and Generators
+-   To write a memory efficient code when we have large datasets, iterator aor generators are used.
+-   <b>Iterables</b>: Any object which can be iterated over through loop, that means any object which has __iter__ method can be treated as iterable object.
+    -   when we do `for i in products` where products is an iterable object `products = ['Mango', 'Orange', 'Grapes']` for loop calls the iter(products) which ultimately calls the products.\__iter__() method returning the iterator object.
+    -   Then it repeatedly calls the next(iterator_obj) until it raises StopIteration exception.
+
+-   <b>Iterators</b>: Used to iterate over an iterable objects. 
+    -   It must implement the iterator protocol. This means it must define two methods:
+    -   __iter__(self): Returns the iterator object itself (conventionally self).
+    -   __next__(self): Returns the next item from the sequence. If there are no more items, it must raise a `StopIteration` exception.
     -   Follows lazy execution
-    -   Implemented using functions
-    -   Uses yield to temporary stop execution and return value until control returns back to it.
-    -   yield returns an iterator, thus every generator is an iterator.
+    -   Uses a single block of memory to access the value of element, thus memory efficient.
+    -   It preserves the state of where it(the iterator) is in the sequence.
+    -   One time use, as once the iterator raise the StopIteration exception, we need to create a new iterator to iterate over the iterable object.
+    -   In simple terms, an iterator has two properties:
+        -   Preserves the state where it is in the sequence
+        -   Can move to next element until the StopIteration exception is raised.
+
+-   <b>Generators</b>: Used to generate the space optimized iterable
+    -   A generator is a special type of iterator implemented using functions.
+    -   Any function having one or more yield statement is called generator.
+    -   Within function `yield` is used which returns the value and pause the further execution of the function, until needed.
+    -   Example:
+        ```
+            def my_generator(start, end):
+                """A simple generator that yields numbers in a range."""
+                current = start
+                while current < end:
+                    yield current # Pause here, return current, and remember state
+                    current += 1
+
+            print("Using my_generator with for loop:")
+            for num in my_generator(1, 5):
+                print(num)
+
+            print("\nManually using my_generator:")
+            gen_obj = my_generator(10, 13) # Calling the generator function returns a generator object
+            print(next(gen_obj)) # Output: 10
+            print(next(gen_obj)) # Output: 11
+            print(next(gen_obj)) # Output: 12
+            try:
+                print(next(gen_obj))
+            except StopIteration:
+                print("Caught StopIteration - end of sequence.")
+        ``` 
+    -   A generator implements the iterator protocol i.e. __iter__ and __next__ methods by itself when we use yield.
+    -   Follows lazy execution
+    -   Generator expression: `(expression for item in iterable if condition)` returns a generator object.
+    -   Methods: send(), thorw(), close()
+        -   generator_obj.send():
+            -   It injects the value to the generator and becomes the result of the yield where it has paused the execution. 
+            -   send() method injects value and also resumes execution until next yield statement or function termination, it does not call the next method but does the job of it after injecting the value.
+        -   generator_obj.throw():
+            -   It is used to raise any error at any particular state. `generator.throw(type, value=None, traceback=None)`
+        -   generator_obj.close():
+            -   Raises a GeneratorExit exception inside the generator.
 
 ### Garbage collection
 -   Python has a support for inbuilt garbage collection using reference counter and cyclic garbage collector
@@ -931,6 +1013,7 @@ Output:
         ```
 
 ### Asynchronous Programming
+-   In depth:  [Async Programming in python](AsyncProgramming.md)
 -   #### Subroutine VS Coroutines
     -   Subroutines:
         -   Subroutines: Are functions or procedures which can be called from anywhere in the program. When called the execution control goes to subroutine and when returns control goes back to program where the subroutine is called.
