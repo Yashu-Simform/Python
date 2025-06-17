@@ -12,19 +12,33 @@
 # print(a.send(5))
 
 
-class A:
-    v = [1222]
+# class A:
+#     v = [1222]
 
-    def update(self, x):
-        A.v = x
-        #!WARNING : self.v = x  Again a re-assignment
+#     def update(self, x):
+#         A.v = x
+#         #!WARNING : self.v = x  Again a re-assignment
 
-    @staticmethod
-    def statFun():
-        print('Its a static one!')
+#     @staticmethod
+#     def statFun():
+#         print('Its a static one!')
 
-o1 = A()
-o2 = A()
+# o1 = A()
+# o2 = A()
 
-# A.statFun()
-print(dir(o1))
+# # A.statFun()
+# print(dir(o1))
+
+def funcx():
+    name = "Main"
+    var1 = yield name
+    print(var1)
+
+gen_obj = funcx()
+print(type(gen_obj)) # must be of type generator object
+
+# Must be primed
+
+# print((next(gen_obj))) # Must returned name variable inside of funcx
+
+gen_obj.send('10') #Print('10') inside the funcx
