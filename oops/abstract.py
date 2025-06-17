@@ -5,18 +5,17 @@ class TheThread(ABC):
     def run():
         print('Hello')
         return 5
-        pass
 
 
 class MyThread(TheThread):
 
     def run():
         print('Hi')
-        pass
 
     def walk():
         print('Me Hoon Na!')
 
 # o1 = TheThread()
-obj = MyThread()
+# obj = MyThread()
 # obj.run()
+TheThread.run()

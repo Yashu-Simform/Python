@@ -534,6 +534,13 @@ def decorator_function(func):
 -   Class:  A relatable object which has its own characteristics (attributes) and behaviour (Methods).
 
 -   In programming a class declaration is just a blueprint for an object instance.
+-   In python every class is an instance of `type` metaclass.
+    ```
+        Class A:
+            pass
+        
+        print(type(A)) -> Output: 'type'
+    ```
 
 -   Attributes: Variables associated with the class are known as attributes.
 -   Methods: Functions associated with the class are known as methods.
@@ -683,7 +690,7 @@ Output:
     -   When we try to access the attributes or methods using class name or using instances the python interpreter first tries to find it in the namespace of the calling reference.
     -   Python MRO uses C3 Linearization Algorithm
     -   It is very helpful to maintain the order of the methods specifically in multiple inheritance.
-    -   Example:
+    -   Example, <b>Diamond Problem</b>:
     ```
         class A:
             def method(self):
@@ -713,7 +720,19 @@ Output:
         Output: D -> B -> A -> C -> A
 
     ```
+    -   __Very Imp!__: Here instance of D is created, thus namespaces are binded accordingly.
+        -   Here in this case, namespaces are binded as:
+            ```
+                D -> B -> C -> A
 
+                Overall it is the namespace of D only.
+            ``` 
+        -   When we do super().method() in method() of class B, it is actually the instance of D looking for a method() in further remaining scope.
+        -   Think of it as different namespaces not as class specific namespaces.
+            ```
+                D -> namespace1 -> namespace2 -> namespace3
+            ```
+        -   Each nested super call will lead to move on to next namespace, until inheritance is carried out.
     - C3 Linearization Algorithm :
         -   Order is preserved as Left to Right
         -   Level order is preserved from child towards parent

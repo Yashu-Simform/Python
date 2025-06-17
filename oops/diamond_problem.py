@@ -4,7 +4,8 @@ class A:
         pass
 
     def printD(self):
-        print(self.name)
+        # print(self.name)
+        print('A')
 
 
 class B(A):
@@ -13,7 +14,9 @@ class B(A):
         pass
 
     def printD(self):
-        print(self.surname)
+        # print(self.surname)
+        print('B')
+        super().printD()
 
 
 class C(A):
@@ -22,7 +25,9 @@ class C(A):
         pass
 
     def printD(self):
-        print(self.home)
+        # print(self.home)
+        print('C')
+        super().printD()
 
 
 class D(B,C):
@@ -35,10 +40,13 @@ class D(B,C):
 
     def printD(self):
         #2 ways to access the methods of parents in multiple inheritance.
-        B.printD(self)
-        C.printD(self)
-        A.printD(self)
-        print(self.contact)
+        print('D')
+        print(D.__mro__)
+        super().printD()
+        # B.printD(self)
+        # C.printD(self)
+        # A.printD(self)
+        # print(self.contact)
 
     def access_B(self):
         B.printD(self)

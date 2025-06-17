@@ -46,5 +46,13 @@
 # gen_obj.send('10') #Print('10') inside the funcx
 
 # Generator Expression
-gen_obj = (i for i in range(10))
-print(type(gen_obj))
+# gen_obj = (i for i in range(10))
+# print(type(gen_obj))
+
+
+# File Handling
+# import json
+# adict = [{'a': 1}, {'b': 2}, {'c': 3}]
+
+# with open('data.json', 'w') as f2:
+#     json.dump(adict, f2)
